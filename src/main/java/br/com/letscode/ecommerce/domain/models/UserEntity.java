@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -25,11 +26,15 @@ public class UserEntity {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
     @Column(name = "update_at")
     private ZonedDateTime updatedAt;
+
 
 /*    @OneToMany( mappedBy = "user_id")
     private Set<OrdersEntity> orders;*/

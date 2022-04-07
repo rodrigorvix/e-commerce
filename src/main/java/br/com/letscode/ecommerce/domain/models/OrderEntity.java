@@ -19,7 +19,7 @@ public class OrderEntity {
         @Column(name = "id")
         private Long id;
 
-        @Column(name = "amount", length = 20, precision = 2)
+        @Column(name = "amount", precision = 20, scale = 2)
         private BigDecimal amount;
 
         @ManyToOne
