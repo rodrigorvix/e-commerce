@@ -2,16 +2,13 @@ package br.com.letscode.ecommerce.domain.controllers;
 
 import br.com.letscode.ecommerce.domain.models.UserEntity;
 import br.com.letscode.ecommerce.domain.repositories.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Optional;
+
 
 @RequestMapping("/api/users")
 @RestController
@@ -42,24 +39,29 @@ public class UserController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-  /*  public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
+        this.userRepository.findById(id)
+                .map( userExists -> {
+                    this.userRepository.delete(userExists);
+                    return userExists;
+                })
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
-        this.userRepository
-                .findById(id)
-                .map( userExists -> this.userRepository.delete(userExists))
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
-    }*/
+    }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity update(@RequestBody UserEntity user, @PathVariable Long id) {
+    @PatchMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody UserEntity user, @PathVariable Long id) {
 
-       return  this.userRepository
+         this.userRepository
                 .findById(id)
                .map(userExists -> {
                    user.setId(userExists.getId());
+                   user.setCreatedAt(userExists.getCreatedAt());
+                   user.setUpdatedAt(ZonedDateTime.now());
                    this.userRepository.save(user);
-                   return ResponseEntity.noContent().build();
-               }).orElseGet( () -> ResponseEntity.notFound().build() );
+                   return userExists;
+               }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
     }
 
