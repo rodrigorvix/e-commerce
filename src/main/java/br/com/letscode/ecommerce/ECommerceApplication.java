@@ -35,8 +35,8 @@ public class ECommerceApplication {
 			users.save(u);
 
 			UserEntity u2 = new UserEntity();
-			u2.setName("Rodrigo");
-			u2.setUsername("rodrigorvix");
+			u2.setName("Teste");
+			u2.setUsername("testando");
 			u2.setBirthDate(LocalDate.of(1992,4,03));
 			u2.setCreatedAt(ZonedDateTime.now());
 			u2.setUpdatedAt(ZonedDateTime.now());
@@ -45,8 +45,8 @@ public class ECommerceApplication {
 
 
 			UserEntity u3 = new UserEntity();
-			u3.setName("Carol");
-			u3.setUsername("carolaine");
+			u3.setName("Zé");
+			u3.setUsername("zezinho");
 			u3.setBirthDate(LocalDate.of(1998,07,11));
 			u3.setCreatedAt(ZonedDateTime.now());
 			u3.setUpdatedAt(ZonedDateTime.now());
