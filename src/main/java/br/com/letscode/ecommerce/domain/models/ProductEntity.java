@@ -25,7 +25,7 @@ public class ProductEntity {
         @Column(name = "description")
         private String description;
 
-        @Column(name = "price")
+        @Column(name = "price", precision = 20, scale = 2)
         private BigDecimal price;
 
         @Column(name = "created_at")
