@@ -53,24 +53,6 @@ public class ECommerceApplication {
 
 			users.save(u3);
 
-			OrderEntity o = new OrderEntity();
-			o.setAmount(BigDecimal.valueOf(10.20));
-			o.setCreatedAt(ZonedDateTime.now());
-			o.setUpdatedAt(ZonedDateTime.now());
-			o.setUser(u2);
-
-			orders.save(o);
-
-		/*	OrderEntity o2 = new OrderEntity();
-			o2.setAmount(BigDecimal.valueOf(20.40));
-			o2.setCreatedAt(ZonedDateTime.now());
-			o2.setUpdatedAt(ZonedDateTime.now());
-			o2.setUser(u2);
-
-			orders.save(o2);*/
-
-			orders.findByUser(u2).forEach(System.out::println);
-
 
 		};
 	}

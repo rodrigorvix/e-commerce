@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,7 @@ public class OrderService {
         }
 
         order.setUser(userExists.get());
+        order.setTotalPrice(BigDecimal.valueOf(0));
         order.setCreatedAt(ZonedDateTime.now());
         order.setUpdatedAt(ZonedDateTime.now());
 

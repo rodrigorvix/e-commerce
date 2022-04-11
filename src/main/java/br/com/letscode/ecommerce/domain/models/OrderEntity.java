@@ -19,8 +19,11 @@ public class OrderEntity {
         @Column(name = "id")
         private Long id;
 
-        @Column(name = "amount", precision = 20, scale = 2)
-        private BigDecimal amount;
+        @Column(name = "total_price", precision = 20, scale = 2)
+        private BigDecimal totalPrice;
+
+        @Column(name = "total_order_items")
+        private int totalOrderItems;
 
         @ManyToOne
         @JoinColumn(name = "user_id")

@@ -12,6 +12,7 @@ import br.com.letscode.ecommerce.exception.RolesException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +61,10 @@ public class OrderItemsService {
     }
 
     public OrderItemsEntity createOrderItem(OrderItemsEntity orderItem, Long user_id, Long order_id, Long product_id) {
+
+        BigDecimal totalPriceProduct = BigDecimal.valueOf(0);
+        int totalOrderItems = 0;
+
         Optional<UserEntity> userExists = this.userRepository.findById(user_id);
 
         Optional<OrderEntity> orderExists = this.orderRepository.findById(order_id);
@@ -80,6 +85,11 @@ public class OrderItemsService {
         if(orderExists.get().getUser().getId() != userExists.get().getId()) {
             throw new RolesException("O pedido não pertece a esse usuário");
         }
+
+        totalPriceProduct = productExists.get().getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity()));
+
+        orderExists.get().setTotalPrice( orderExists.get().getTotalPrice().add(totalPriceProduct));
+        orderExists.get().setTotalOrderItems(orderExists.get().getTotalOrderItems() + orderItem.getQuantity());
 
         orderItem.setOrder(orderExists.get());
         orderItem.setProduct(productExists.get());
