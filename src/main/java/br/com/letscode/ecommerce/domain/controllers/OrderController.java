@@ -1,16 +1,10 @@
 package br.com.letscode.ecommerce.domain.controllers;
 
 import br.com.letscode.ecommerce.domain.models.OrderEntity;
-import br.com.letscode.ecommerce.domain.models.ProductEntity;
-import br.com.letscode.ecommerce.domain.models.UserEntity;
-import br.com.letscode.ecommerce.domain.repositories.OrderRepository;
-import br.com.letscode.ecommerce.domain.repositories.UserRepository;
 import br.com.letscode.ecommerce.domain.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @RequestMapping("/api/users/{user_id}/orders")
