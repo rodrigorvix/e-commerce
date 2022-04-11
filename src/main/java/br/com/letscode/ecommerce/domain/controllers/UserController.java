@@ -21,15 +21,15 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<UserEntity> index() {
+    public List<UserEntity> getUsers() {
         List<UserEntity> users = this.userRepository.findAll();
 
         return users;
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public UserEntity store (@RequestBody UserEntity user){
+    public UserEntity createUser (@RequestBody UserEntity user){
 
         user.setCreatedAt(ZonedDateTime.now());
         user.setUpdatedAt(ZonedDateTime.now());
@@ -37,7 +37,7 @@ public class UserController {
         return  this.userRepository.save(user);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         this.userRepository.findById(id)
@@ -49,7 +49,7 @@ public class UserController {
 
     }
 
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody UserEntity user, @PathVariable Long id) {
 

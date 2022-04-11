@@ -36,7 +36,7 @@ public class OrderController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long user_id, @PathVariable Long id) {
+    public void deleteOrderByUser(@PathVariable Long user_id, @PathVariable Long id) {
 
         this.orderService.removeOrder(user_id, id);
 

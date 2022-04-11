@@ -39,4 +39,24 @@ public class OrderitemsController {
         return  orderItemsSaved;
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrderItemByOrder(@PathVariable Long user_id, @PathVariable Long order_id, @PathVariable Long id) {
+
+        this.orderItemsService.removeOrderItem(user_id,order_id, id);
+
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateOrderItemByOrder(
+            @RequestBody OrderItemsEntity orderItem,
+            @PathVariable Long user_id,
+            @PathVariable Long order_id,
+            @PathVariable Long id) {
+
+        this.orderItemsService.updateOrderItem(orderItem,user_id,order_id, id);
+
+    }
+
 }
