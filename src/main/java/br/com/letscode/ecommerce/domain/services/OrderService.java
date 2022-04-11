@@ -5,6 +5,7 @@ import br.com.letscode.ecommerce.domain.models.OrderEntity;
 import br.com.letscode.ecommerce.domain.models.UserEntity;
 import br.com.letscode.ecommerce.domain.repositories.OrderRepository;
 import br.com.letscode.ecommerce.domain.repositories.UserRepository;
+import br.com.letscode.ecommerce.domain.util.OrderStatus;
 import br.com.letscode.ecommerce.exception.RolesException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class OrderService {
 
         order.setUser(userExists.get());
         order.setTotalPrice(BigDecimal.valueOf(0));
+        order.setStatus(OrderStatus.OPEN);
         order.setCreatedAt(ZonedDateTime.now());
         order.setUpdatedAt(ZonedDateTime.now());
 
@@ -80,4 +82,36 @@ public class OrderService {
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
     }
 
+    public void setClosedStatusOrder(Long user_id, Long id) {
+
+        Optional<UserEntity> userExists = this.userRepository.findById(user_id);
+
+        if(!userExists.isPresent()) {
+            throw new RolesException("Usuário não existe.");
+        }
+
+        this.orderRepository.findById(id)
+                .map( orderExists -> {
+                    orderExists.setStatus(OrderStatus.CLOSED);
+                    this.orderRepository.save(orderExists);
+                    return orderExists;
+                })
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
+    }
+
+    public void setOpenStatusOrder(Long user_id, Long id) {
+        Optional<UserEntity> userExists = this.userRepository.findById(user_id);
+
+        if(!userExists.isPresent()) {
+            throw new RolesException("Usuário não existe.");
+        }
+
+        this.orderRepository.findById(id)
+                .map( orderExists -> {
+                    orderExists.setStatus(OrderStatus.OPEN);
+                    this.orderRepository.save(orderExists);
+                    return orderExists;
+                })
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
+    }
 }

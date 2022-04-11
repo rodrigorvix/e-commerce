@@ -1,5 +1,6 @@
 package br.com.letscode.ecommerce.domain.models;
 
+import br.com.letscode.ecommerce.domain.util.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,9 @@ public class OrderEntity {
 
         @Column(name = "total_order_items")
         private int totalOrderItems;
+
+        @Column(name = "status")
+        private OrderStatus status;
 
         @ManyToOne
         @JoinColumn(name = "user_id")

@@ -42,4 +42,19 @@ public class OrderController {
 
     }
 
+    @PatchMapping("/{id}/closed")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setClosedStatusOrder(@PathVariable Long user_id, @PathVariable Long id) {
+
+        this.orderService.setClosedStatusOrder(user_id, id);
+
+    }
+    @PatchMapping("/{id}/open")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setOpenStatusOrder(@PathVariable Long user_id, @PathVariable Long id) {
+
+        this.orderService.setOpenStatusOrder(user_id, id);
+
+    }
+
 }
