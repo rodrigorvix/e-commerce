@@ -44,7 +44,7 @@ public class ProductController {
 
     }
 
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@RequestBody ProductEntity product, @PathVariable Long id) {
 
