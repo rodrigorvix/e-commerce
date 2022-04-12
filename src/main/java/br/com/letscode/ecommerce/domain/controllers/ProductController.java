@@ -2,6 +2,7 @@ package br.com.letscode.ecommerce.domain.controllers;
 
 import br.com.letscode.ecommerce.domain.models.ProductEntity;
 import br.com.letscode.ecommerce.domain.repositories.ProductRepository;
+import br.com.letscode.ecommerce.domain.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,54 +15,40 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-    private ProductRepository productRepository;
+    private ProductService productService;
 
-    public ProductController (ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController (ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping()
-    public List<ProductEntity> index() {
-        List<ProductEntity> products = this.productRepository.findAll();
+    public List<ProductEntity> getProducts() {
 
-        return products;
+        return this.productService.getProducts();
+
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductEntity store (@RequestBody ProductEntity product){
+    public ProductEntity createProduct (@RequestBody ProductEntity product){
 
-        product.setCreatedAt(ZonedDateTime.now());
-        product.setUpdatedAt(ZonedDateTime.now());
+        return this.productService.createProduct(product);
 
-        return  this.productRepository.save(product);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        this.productRepository.findById(id)
-                .map( productExists -> {
-                    this.productRepository.delete(productExists);
-                    return productExists;
-                })
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+    public void deleteProduct(@PathVariable Long id) {
+
+        this.productService.deleteProduct(id);
 
     }
 
     @PatchMapping("/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody ProductEntity product, @PathVariable Long id) {
+    public void updateProduct(@RequestBody ProductEntity product, @PathVariable Long id) {
 
-        this.productRepository
-                .findById(id)
-                .map(productExists -> {
-                    product.setId(productExists.getId());
-                    product.setCreatedAt(productExists.getCreatedAt());
-                    product.setUpdatedAt(ZonedDateTime.now());
-                    this.productRepository.save(product);
-                    return productExists;
-                }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+        this.productService.updateProduct(product, id);
 
     }
 }

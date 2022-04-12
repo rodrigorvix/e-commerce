@@ -1,6 +1,7 @@
 package br.com.letscode.ecommerce.domain.models;
 
 import br.com.letscode.ecommerce.domain.util.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,9 @@ public class OrderEntity {
         @Column(name = "status")
         private OrderStatus status;
 
-        @ManyToOne
-        @JoinColumn(name = "user_id")
+        @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
+        @JoinColumn(name = "user_id",nullable = false)
+        @JsonBackReference
         private UserEntity user;
 
         @Column(name = "created_at")

@@ -1,6 +1,5 @@
 package br.com.letscode.ecommerce;
 
-import br.com.letscode.ecommerce.domain.models.OrderEntity;
 import br.com.letscode.ecommerce.domain.models.UserEntity;
 import br.com.letscode.ecommerce.domain.repositories.OrderRepository;
 import br.com.letscode.ecommerce.domain.repositories.UserRepository;
@@ -9,10 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
@@ -57,6 +52,13 @@ public class ECommerceApplication {
 		};
 	}
 
+/*
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+*/
 
 
 	public static void main(String[] args) {
