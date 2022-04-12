@@ -8,6 +8,7 @@ import br.com.letscode.ecommerce.domain.repositories.OrderItemsRepository;
 import br.com.letscode.ecommerce.domain.repositories.OrderRepository;
 import br.com.letscode.ecommerce.domain.repositories.ProductRepository;
 import br.com.letscode.ecommerce.domain.repositories.UserRepository;
+import br.com.letscode.ecommerce.domain.util.OrderStatus;
 import br.com.letscode.ecommerce.exception.RolesException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,10 @@ public class OrderItemsService {
 
         if(orderExists.get().getUser().getId() != userExists.get().getId()) {
             throw new RolesException("O pedido não pertece a esse usuário");
+        }
+
+        if(orderExists.get().getStatus() == OrderStatus.CLOSED) {
+            throw new RolesException("O pedido já está fechado.");
         }
 
         totalPriceProduct = productExists.get().getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity()));
