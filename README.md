@@ -37,6 +37,9 @@ $ git clone https://github.com/rodrigorvix/e-commerce.git
 $ cd e-commerce
 ```
 
+Atualize o arquivo application.properties com a sua configuração do banco de dados. 
+
+
 # ℹ️ Rotas
 
 Segue abaixo os endpoints disponíveis no projeto.
