@@ -32,6 +32,9 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "function")
+    private String function;
+
     @Column(name = "birth_date")
     private LocalDate birthDate;
 

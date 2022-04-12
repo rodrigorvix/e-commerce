@@ -2,6 +2,7 @@ package br.com.letscode.ecommerce.domain.controllers;
 
 import br.com.letscode.ecommerce.domain.models.OrderEntity;
 import br.com.letscode.ecommerce.domain.services.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,12 @@ import java.util.List;
 @RestController
 public class OrderController {
 
+    @Autowired
     private OrderService orderService;
 
-    public OrderController(OrderService orderService) {
+    /*public OrderController(OrderService orderService) {
         this.orderService = orderService;
-    }
+    }*/
 
    @GetMapping()
    public List<OrderEntity> getOrdersByUser(@PathVariable Long user_id) {

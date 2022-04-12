@@ -1,20 +1,17 @@
 package br.com.letscode.ecommerce;
 
-import br.com.letscode.ecommerce.domain.models.UserEntity;
-import br.com.letscode.ecommerce.domain.repositories.OrderRepository;
-import br.com.letscode.ecommerce.domain.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @SpringBootApplication
 public class ECommerceApplication {
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner init(@Autowired UserRepository users,
 								  @Autowired OrderRepository orders) {
 		return args -> {
@@ -50,19 +47,17 @@ public class ECommerceApplication {
 
 
 		};
-	}
-
-/*
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-*/
+	}*/
 
 
 	public static void main(String[] args) {
 		SpringApplication.run(ECommerceApplication.class, args);
+	}
+
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 
