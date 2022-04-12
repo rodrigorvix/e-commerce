@@ -35,12 +35,7 @@ public class OrderItemsService {
     private ProductRepository productRepository;
 
 
-    public List<OrderItemsEntity> getOrderItems(Long user_id, Long order_id) {
-
-        Optional<UserEntity> userExists = this.userRepository.findById(user_id);
-
-        Optional<OrderEntity> orderExists = this.orderRepository.findById(order_id);
-
+    public void validateDataOrderItems(Optional<UserEntity> userExists, Optional<OrderEntity> orderExists) {
         if(!userExists.isPresent()) {
             throw new RolesException("Usuário não existe.");
         }
@@ -51,6 +46,15 @@ public class OrderItemsService {
         if(orderExists.get().getUser().getId() != userExists.get().getId()) {
             throw new RolesException("O pedido não pertece a esse usuário");
         }
+    }
+
+    public List<OrderItemsEntity> getOrderItems(Long user_id, Long order_id) {
+
+        Optional<UserEntity> userExists = this.userRepository.findById(user_id);
+
+        Optional<OrderEntity> orderExists = this.orderRepository.findById(order_id);
+
+        this.validateDataOrderItems(userExists, orderExists);
 
         List<OrderItemsEntity> orderItems = this.orderItemsRepository
                 .findAll()
@@ -72,19 +76,10 @@ public class OrderItemsService {
 
         Optional<ProductEntity> productExists = this.productRepository.findById(product_id);
 
-        if(!userExists.isPresent()) {
-            throw new RolesException("Usuário não existe.");
-        }
-        if (!orderExists.isPresent()) {
-            throw  new RolesException("Pedido não existe");
-        }
+        this.validateDataOrderItems(userExists, orderExists);
 
         if (!productExists.isPresent()) {
             throw  new RolesException("Produto não existe");
-        }
-
-        if(orderExists.get().getUser().getId() != userExists.get().getId()) {
-            throw new RolesException("O pedido não pertece a esse usuário");
         }
 
         if(orderExists.get().getStatus() == OrderStatus.CLOSED) {
@@ -112,16 +107,7 @@ public class OrderItemsService {
 
         Optional<OrderItemsEntity> orderItemExists = this.orderItemsRepository.findById(id);
 
-        if(!userExists.isPresent()) {
-            throw new RolesException("Usuário não existe.");
-        }
-        if (!orderExists.isPresent()) {
-            throw  new RolesException("Pedido não existe");
-        }
-
-        if(orderExists.get().getUser().getId() != userExists.get().getId()) {
-            throw new RolesException("O pedido não pertece a esse usuário");
-        }
+        this.validateDataOrderItems(userExists, orderExists);
 
         if (!orderItemExists.isPresent()) {
             throw  new RolesException("Item de pedido não existe");
@@ -139,16 +125,7 @@ public class OrderItemsService {
 
         Optional<OrderItemsEntity> orderItemExists = this.orderItemsRepository.findById(id);
 
-        if(!userExists.isPresent()) {
-            throw new RolesException("Usuário não existe.");
-        }
-        if (!orderExists.isPresent()) {
-            throw  new RolesException("Pedido não existe");
-        }
-
-        if(orderExists.get().getUser().getId() != userExists.get().getId()) {
-            throw new RolesException("O pedido não pertece a esse usuário");
-        }
+        this.validateDataOrderItems(userExists, orderExists);
 
         if (!orderItemExists.isPresent()) {
             throw  new RolesException("Item de pedido não existe");
